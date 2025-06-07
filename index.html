@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Love letter for crush</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: #f5e9fb; /* Soft lavender background */
+        overflow-x: hidden;
+      }
+
+      .envlope-wrapper {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      #envelope {
+        position: relative;
+        width: 90vw;
+        max-width: 300px;
+        height: 200px;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        background-color: #b57edc; /* Main envelope color */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .front {
+        position: absolute;
+        width: 0;
+        height: 0;
+        z-index: 3;
+      }
+
+      .flap {
+        border-left: 150px solid transparent;
+        border-right: 150px solid transparent;
+        border-bottom: 82px solid transparent;
+        border-top: 98px solid #b57edc; /* Flap color */
+        transform-origin: top;
+        pointer-events: none;
+      }
+
+      .pocket {
+        border-left: 150px solid #d6a4ed; /* Side */
+        border-right: 150px solid #d6a4ed;
+        border-bottom: 110px solid #eac8ff; /* Bottom */
+        border-top: 90px solid transparent;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+      }
+
+      .letter {
+        position: relative;
+        background-color: #fff;
+        width: 90%;
+        margin: auto;
+        height: 90%;
+        top: 5%;
+        border-radius: 6px;
+        box-shadow: 0 2px 26px rgba(0, 0, 0, 0.12);
+        font-family: "Poppins", sans-serif;
+      }
+
+      .letter:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      .words {
+        position: absolute;
+        left: 10%;
+        width: 80%;
+        height: 14%;
+        background-color: #ffe6f0;
+        padding: 4px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+      }
+
+      .words.line1 {
+        top: 8%;
+        width: 60%;
+        font-weight: 600;
+      }
+
+      .words.line2 {
+        top: 30%;
+        text-align: center;
+      }
+
+      .words.line3 {
+        top: 50%;
+        text-align: center;
+      }
+
+      .words.line4 {
+        top: 70%;
+        text-align: center;
+      }
+
+      .open .flap {
+        transform: rotateX(180deg);
+        transition: transform 0.4s ease, z-index 0.6s;
+        z-index: 1;
+      }
+
+      .close .flap {
+        transform: rotateX(0deg);
+        transition: transform 0.4s 0.6s ease, z-index 1s;
+        z-index: 5;
+      }
+
+      .close .letter {
+        transform: translateY(0px);
+        transition: transform 0.4s ease, z-index 1s;
+        z-index: 1;
+      }
+
+      .open .letter {
+        transform: translateY(-100px);
+        transition: transform 0.4s 0.6s ease, z-index 0.6s;
+        z-index: 2;
+      }
+
+      .hearts {
+        position: absolute;
+        top: 90px;
+        left: 0;
+        right: 0;
+        z-index: 2;
+      }
+
+      .heart {
+        position: absolute;
+        bottom: 0;
+        right: 10%;
+        pointer-events: none;
+      }
+
+      .heart:before,
+      .heart:after {
+        content: "";
+        position: absolute;
+        left: 50px;
+        top: 0;
+        width: 50px;
+        height: 80px;
+        background: #e60073;
+        border-radius: 50px 50px 0 0;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+      }
+
+      .heart:after {
+        left: 0;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+      }
+
+      .close .heart {
+        opacity: 0;
+        animation: none;
+      }
+
+      .a1 {
+        left: 20%;
+        transform: scale(0.6);
+        opacity: 1;
+        animation: slideUp 4s linear 1, sideSway 2s ease-in-out 4 alternate;
+        animation-fill-mode: forwards;
+        animation-delay: 0.7s;
+      }
+
+      .a2 {
+        left: 55%;
+        transform: scale(1);
+        opacity: 1;
+        animation: slideUp 5s linear 1, sideSway 4s ease-in-out 2 alternate;
+        animation-fill-mode: forwards;
+        animation-delay: 0.7s;
+      }
+
+      .a3 {
+        left: 10%;
+        transform: scale(0.8);
+        opacity: 1;
+        animation: slideUp 7s linear 1, sideSway 2s ease-in-out 6 alternate;
+        animation-fill-mode: forwards;
+        animation-delay: 0.7s;
+      }
+
+      @keyframes slideUp {
+        0% {
+          top: 0;
+        }
+        100% {
+          top: -600px;
+        }
+      }
+
+      @keyframes sideSway {
+        0% {
+          margin-left: 0px;
+        }
+        100% {
+          margin-left: 50px;
+        }
+      }
+
+      .reset {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .reset button {
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        transition: all 0.1s linear;
+        appearance: none;
+        background-color: transparent;
+        border: 2px solid #b57edc;
+        border-radius: 4px;
+        color: #b57edc;
+        font-size: 14px;
+        text-transform: uppercase;
+        margin: 5px;
+        padding: 10px 16px;
+        cursor: pointer;
+        min-width: 100px;
+      }
+
+      .reset button:hover {
+        background-color: #b57edc;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- 🎵 Background music (replace 'music.mp3' with your file) -->
+    <audio id="bgMusic" loop>
+      <source src="Goo Goo Dolls - Iris.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <div class="envlope-wrapper">
+      <div id="envelope" class="close">
+        <div class="front flap"></div>
+        <div class="front pocket"></div>
+        <div class="letter">
+          <div class="words line1">To: Gavin</div>
+          <div class="words line2">HAPPY FIRST MONTHSARRY BABY</div>
+          <div class="words line3">I LOVE YOU ALWAYS</div>
+          <div class="words line4">       ≽^•⩊•^≼</div>
+        </div>
+        <div class="hearts">
+          <div class="heart a1"></div>
+          <div class="heart a2"></div>
+          <div class="heart a3"></div>
+        </div>
+      </div>
+      <div class="reset">
+        <button id="open">Open</button>
+        <button id="reset">Close</button>
+      </div>
+    </div>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        const envelope = $("#envelope");
+        const music = document.getElementById("bgMusic");
+
+        $("#open").click(() => {
+          envelope.addClass("open").removeClass("close");
+          music.play().catch(() => {}); // start music on click
+        });
+
+        $("#reset").click(() => {
+          envelope.addClass("close").removeClass("open");
+          music.pause();
+          music.currentTime = 0;
+        });
+
+        envelope.click(() => {
+          envelope.addClass("open").removeClass("close");
+          music.play().catch(() => {});
+        });
+      });
+    </script>
+  </body>
+</html>
+
